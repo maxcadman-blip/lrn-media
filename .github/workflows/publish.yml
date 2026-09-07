@@ -1,4 +1,4 @@
-name: Publish to Instagram
+name: Publish to Instagram and Facebook
 
 # Runs every day at 16:00 UTC — 17:00 UK during BST, 16:00 in winter.
 # The script publishes only what queue.json says is due, so a run on a day with
@@ -38,6 +38,9 @@ jobs:
       - name: Run publisher
         env:
           IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          # Absent until the Page token is created — the script posts to
+          # whichever platforms have a token, so Instagram keeps working.
+          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
         run: |
           case "${{ inputs.mode || 'publish' }}" in
             check)   node publish.mjs --check ;;
