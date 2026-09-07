@@ -1,0 +1,58 @@
+name: Publish to Instagram
+
+# Runs every day at 16:00 UTC — 17:00 UK during BST, 16:00 in winter.
+# The script publishes only what queue.json says is due, so a run on a day with
+# nothing scheduled costs a few seconds and does nothing.
+#
+# GitHub skips scheduled workflows in repos with no activity for 60 days, and can
+# run cron late under load. Neither matters for a posting cadence measured in days.
+
+on:
+  schedule:
+    - cron: "0 16 * * *"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "What to do"
+        type: choice
+        default: check
+        options: [check, dry-run, publish]
+
+permissions:
+  contents: write        # only so the run can commit posted.json back
+
+concurrency:
+  group: instagram-publish
+  cancel-in-progress: false   # never interrupt a half-finished publish
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"     # for built-in fetch
+
+      - name: Run publisher
+        env:
+          IG_TOKEN: ${{ secrets.IG_TOKEN }}
+        run: |
+          case "${{ inputs.mode || 'publish' }}" in
+            check)   node publish.mjs --check ;;
+            dry-run) node publish.mjs --dry-run ;;
+            *)       node publish.mjs ;;
+          esac
+
+      # Records what went out. Skipped on check and dry-run, which write nothing.
+      - name: Record what was posted
+        if: success() && (inputs.mode == '' || inputs.mode == 'publish')
+        run: |
+          if [[ -n "$(git status --porcelain posted.json)" ]]; then
+            git config user.name  "lrn.to publisher"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add posted.json
+            git commit -m "Posted $(node -p "require('./posted.json').posted.at(-1).file")"
+            git push
+          fi
