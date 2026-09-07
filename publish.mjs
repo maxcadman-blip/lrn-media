@@ -136,21 +136,41 @@ async function igPublish(igId, videoUrl, caption) {
 
 /* ---------------------------------------------------------------- facebook */
 
-const fbMe = () => call(FB_API, "/me", { params: { fields: "id,name" }, token: FB_TOKEN });
+/* Two kinds of credential end up here and they answer "who am I?" differently.
+   A Page access token's /me IS the Page. A system user token's /me is the system
+   user — the Pages it can act for come from /me/accounts, which also hands back a
+   per-Page token to publish with. Resolve both, and fall back to the Page id in
+   queue.json so a business-owned Page that lists oddly still works. */
+async function fbResolve(configuredId) {
+  const accounts = await call(FB_API, "/me/accounts", { params: { fields: "id,name,access_token" }, token: FB_TOKEN })
+    .catch(() => ({ data: [] }));
+  const pages = accounts.data ?? [];
+
+  const page = configuredId ? pages.find(p => p.id === configuredId) : pages[0];
+  if (page) return { id: page.id, name: page.name, token: page.access_token || FB_TOKEN };
+
+  const me = await call(FB_API, "/me", { params: { fields: "id,name" }, token: FB_TOKEN });
+  if (!configuredId || me.id === configuredId) return { id: me.id, name: me.name, token: FB_TOKEN };
+
+  /* /me was something else — a system user whose Pages didn't list. The configured
+     id is still the right target and the token still carries the permission. */
+  return { id: configuredId, name: `Page ${configuredId}`, token: FB_TOKEN };
+}
 
 /* Three phases. The middle one is the interesting bit: rather than uploading
    bytes, we hand rupload.facebook.com a file_url header and Facebook fetches it
    itself — which is why the clips have to be publicly reachable, and why the
    host must not block the facebookexternalhit user agent. */
-async function fbPublish(pageId, videoUrl, description) {
+async function fbPublish(page, videoUrl, description) {
+  const { id: pageId, token } = page;
   const { video_id, upload_url } = await call(FB_API, `/${pageId}/video_reels`, {
-    method: "POST", token: FB_TOKEN, params: { upload_phase: "start" },
+    method: "POST", token, params: { upload_phase: "start" },
   });
   log(`    reel ${video_id}`);
 
   const up = await fetch(upload_url, {
     method: "POST",
-    headers: { Authorization: `OAuth ${FB_TOKEN}`, file_url: videoUrl },
+    headers: { Authorization: `OAuth ${token}`, file_url: videoUrl },
   });
   const upBody = await up.text();
   let upJson = {};
@@ -162,7 +182,7 @@ async function fbPublish(pageId, videoUrl, description) {
   if (DRY) { log(`    --dry-run: stopping before publish`); return null; }
 
   await call(FB_API, `/${pageId}/video_reels`, {
-    method: "POST", token: FB_TOKEN,
+    method: "POST", token,
     params: { video_id, upload_phase: "finish", video_state: "PUBLISHED", description },
   });
 
@@ -172,7 +192,7 @@ async function fbPublish(pageId, videoUrl, description) {
   while (Date.now() < deadline) {
     await sleep(8_000);
     try {
-      const { status } = await call(FB_API, `/${video_id}`, { params: { fields: "status" }, token: FB_TOKEN });
+      const { status } = await call(FB_API, `/${video_id}`, { params: { fields: "status" }, token });
       const phase = status?.video_status ?? status?.processing_phase?.status;
       if (phase === "ready" || status?.publishing_phase?.status === "complete") { log(`    published`); break; }
       if (status?.processing_phase?.status === "error") throw new Error(`Facebook failed to process the video`);
@@ -201,7 +221,7 @@ const isDone = file => { const e = entryFor(file); return !!e && targets.every(t
 
 const accounts = {};
 if (IG_TOKEN) { const me = await igMe().catch(e => die(e.message)); accounts.instagram = `@${me.username} (${me.user_id})`; accounts.igId = me.user_id; }
-if (FB_TOKEN) { const me = await fbMe().catch(e => die(e.message)); accounts.facebook = `${me.name} (${me.id})`; accounts.pageId = me.id; }
+if (FB_TOKEN) { const p = await fbResolve(queue.facebookPageId).catch(e => die(e.message)); accounts.facebook = `${p.name} (${p.id})`; accounts.page = p; }
 
 log(`Posting to: ${targets.join(" + ")}`);
 if (accounts.instagram) log(`  Instagram  ${accounts.instagram}`);
@@ -254,7 +274,7 @@ for (const platform of targets) {
   try {
     const id = platform === "instagram"
       ? await igPublish(accounts.igId, videoUrl, post.caption)
-      : await fbPublish(accounts.pageId, videoUrl, post.caption);
+      : await fbPublish(accounts.page, videoUrl, post.caption);
     if (!DRY) entry[platform] = { id, at: new Date().toISOString() };
   } catch (e) {
     /* Deliberately not fatal. One platform being broken should not stop the
