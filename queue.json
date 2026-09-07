@@ -1,0 +1,62 @@
+{
+  "_comment": [
+    "The posting queue. Each entry publishes at 17:00 UK time on its date.",
+    "Editing this file IS the sign-off step — nothing posts that isn't listed here,",
+    "and anything listed can be removed or moved right up until its date.",
+    "Dates follow the three-a-week schedule in BATCH-2-POSTING.md, alternating a",
+    "play-along with a myth card so the feed doesn't read as one repeated gimmick."
+  ],
+  "baseUrl": "https://maxcadman-blip.github.io/lrn-media/clips",
+  "posts": [
+    {
+      "date": "2026-09-09",
+      "file": "05-warmup-four.mp4",
+      "caption": "Starts easy. Doesn't stay easy. Comment where you dropped it 🧠\n\n#memorytest #workingmemory #studytok #brainteaser #psychology"
+    },
+    {
+      "date": "2026-09-11",
+      "file": "11-highlighting.mp4",
+      "caption": "Ten years of exams and nobody mentioned the two things that actually work. Sources are in the quiz if you want to check.\n\n#studytips #studytok #revision #learning #psychology"
+    },
+    {
+      "date": "2026-09-14",
+      "file": "07-speed-run.mp4",
+      "caption": "Same six numbers both times. Only the speed changed. That's the entire argument for being taught at your pace 👀\n\n#memorytest #workingmemory #studytok #focus #learning"
+    },
+    {
+      "date": "2026-09-16",
+      "file": "10-five-then-seven.mp4",
+      "caption": "Most people tap out at 6. Comment the highest you managed — I want to know if anyone clears 8 🧠\n\n#memorytest #workingmemory #studytok #brainteaser #psychology"
+    },
+    {
+      "date": "2026-09-18",
+      "file": "12-four-things.mp4",
+      "caption": "Cognitive Load Theory in 19 seconds. The number is way smaller than anyone tells you.\n\n#studytips #workingmemory #studytok #psychology #learning"
+    },
+    {
+      "date": "2026-09-21",
+      "file": "06-letters-not-numbers.mp4",
+      "caption": "Same test, letters instead of numbers. It's harder and there's a reason — no counting rhythm to lean on. Did you get five?\n\n#memorytest #workingmemory #brainteaser #studytok #psychology"
+    },
+    {
+      "date": "2026-09-23",
+      "file": "08-backwards-five.mp4",
+      "caption": "Forwards is memory. Backwards is memory plus juggling — and it's what every lesson actually asks of you. Comment if you got five.\n\n#memorytest #hardmode #workingmemory #brainteaser #studytok"
+    },
+    {
+      "date": "2026-09-25",
+      "file": "13-not-a-visual-learner.mp4",
+      "caption": "If a teacher ever told you your learning style, they meant well. The evidence just doesn't back it up.\n\n#studytips #learningstyles #studytok #psychology #teaching"
+    },
+    {
+      "date": "2026-09-28",
+      "file": "09-nobody-gets-nine.mp4",
+      "caption": "Right, a lot of you have been claiming seven. Nine then.\n\n#memorytest #hardmode #workingmemory #studytok #brainteaser"
+    },
+    {
+      "date": "2026-09-30",
+      "file": "14-cramming.mp4",
+      "caption": "The same hours. Spread out. That's it, that's the hack.\n\n#studytips #revision #studytok #exams #learning"
+    }
+  ]
+}
