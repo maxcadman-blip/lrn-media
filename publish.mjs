@@ -147,12 +147,23 @@ async function fbResolve(configuredId) {
      and Facebook answered "Object with ID '1233370956533582' does not exist" — an
      error about the Page that was really an error about the token. Two days of the
      wrong diagnosis for want of one printed line. */
-  let reason = null;
-  const accounts = await call(FB_API, "/me/accounts", { params: { fields: "id,name,access_token" }, token: FB_TOKEN })
-    .catch(e => { reason = e.message.split("\n")[0]; return { data: [] }; });
-  const pages = accounts.data ?? [];
+  /* Retried, because one empty response is not evidence the Page is gone. On 8 Sep
+     this came back empty and cost a day's Facebook post; a check run the next
+     morning, same token and same Page, listed it immediately. Three tries with a
+     widening gap turns that class of blip into a pause instead of a missed day. */
+  let reason = null, pages = [];
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    const accounts = await call(FB_API, "/me/accounts", { params: { fields: "id,name,access_token" }, token: FB_TOKEN })
+      .catch(e => { reason = e.message.split("\n")[0]; return { data: [] }; });
+    pages = accounts.data ?? [];
+    if (pages.length) break;
+    if (attempt < 3) {
+      log(`  /me/accounts listed no Pages (try ${attempt} of 3) — waiting ${attempt * 5}s`);
+      await sleep(attempt * 5_000);
+    }
+  }
   if (!pages.length)
-    log(`  ⚠ /me/accounts listed no Pages${reason ? ` — ${reason}` : " (empty response, no error)"}`);
+    log(`  ⚠ /me/accounts listed no Pages after 3 tries${reason ? ` — ${reason}` : " (empty response, no error)"}`);
 
   const page = configuredId ? pages.find(p => p.id === configuredId) : pages[0];
   if (page) return { id: page.id, name: page.name, token: page.access_token || FB_TOKEN };

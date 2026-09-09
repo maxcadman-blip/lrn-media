@@ -7,10 +7,11 @@
       "facebook": { "id": "1004989905887202", "at": "2026-09-07T15:16:00.585Z" }
     },
     {
-      "_recovered": "Written by hand on 9 Sep. Instagram DID publish this on 8 Sep (run 34250064044) but the 'Record what was posted' step was gated on success(), the run exited 1 because Facebook failed, and so the ledger was never committed. Without this entry the next run would have posted it to Instagram a second time. The id below is the upload container, not the published media id — the published id was never logged. Facebook is deliberately absent: it did not go out, and the run that fixes the Page token can still send it.",
+      "_recovered": "Written by hand on 9 Sep. Instagram DID publish this on 8 Sep (run 34250064044) but the 'Record what was posted' step was gated on success(), the run exited 1 because Facebook failed, and so the ledger was never committed. Without this entry the next run would have posted it to Instagram a second time. The id below is the upload container, not the published media id - the published id was never logged.",
       "file": "05-warmup-four.mp4",
       "date": "2026-09-08",
-      "instagram": { "id": "container:18096512210186190", "at": "2026-09-08T16:17:00.000Z" }
+      "instagram": { "id": "container:18096512210186190", "at": "2026-09-08T16:17:00.000Z" },
+      "facebook": { "skipped": true, "at": "2026-09-09T15:00:00.000Z", "why": "Never sent. Facebook failed on 8 Sep and by the time it was diagnosed the queue had moved on. Back-filling it would have spent today's slot on Monday's clip and pushed every remaining post a day later, out of step with TikTok. Max chose to keep the three platforms aligned and lose this one post on Facebook." }
     }
   ]
 }
