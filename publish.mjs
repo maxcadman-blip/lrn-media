@@ -142,18 +142,33 @@ async function igPublish(igId, videoUrl, caption) {
    per-Page token to publish with. Resolve both, and fall back to the Page id in
    queue.json so a business-owned Page that lists oddly still works. */
 async function fbResolve(configuredId) {
+  /* Every branch below now says out loud why it was taken. On 8 Sep this lookup
+     came back empty, the code fell through silently to posting as the system user,
+     and Facebook answered "Object with ID '1233370956533582' does not exist" — an
+     error about the Page that was really an error about the token. Two days of the
+     wrong diagnosis for want of one printed line. */
+  let reason = null;
   const accounts = await call(FB_API, "/me/accounts", { params: { fields: "id,name,access_token" }, token: FB_TOKEN })
-    .catch(() => ({ data: [] }));
+    .catch(e => { reason = e.message.split("\n")[0]; return { data: [] }; });
   const pages = accounts.data ?? [];
+  if (!pages.length)
+    log(`  ⚠ /me/accounts listed no Pages${reason ? ` — ${reason}` : " (empty response, no error)"}`);
 
   const page = configuredId ? pages.find(p => p.id === configuredId) : pages[0];
   if (page) return { id: page.id, name: page.name, token: page.access_token || FB_TOKEN };
+  if (pages.length)
+    log(`  ⚠ /me/accounts listed ${pages.map(p => p.id).join(", ")}, not the configured ${configuredId}`);
 
   const me = await call(FB_API, "/me", { params: { fields: "id,name" }, token: FB_TOKEN });
   if (!configuredId || me.id === configuredId) return { id: me.id, name: me.name, token: FB_TOKEN };
 
-  /* /me was something else — a system user whose Pages didn't list. The configured
-     id is still the right target and the token still carries the permission. */
+  /* /me was something else — a system user whose Pages didn't list. Publishing with
+     the system user's own token will almost certainly fail with error 100/33. Go
+     ahead anyway so the attempt and its real error are on the record, but name the
+     problem first, because the error Facebook returns points at the wrong thing. */
+  log(`  ⚠ this token is ${me.name} (${me.id}), not the Page, and the Page did not list.`);
+  log(`    Publishing will likely fail. Check Business settings → System users →`);
+  log(`    lrn-publisher → Assigned assets, then generate a fresh token.`);
   return { id: configuredId, name: `Page ${configuredId}`, token: FB_TOKEN };
 }
 
@@ -268,6 +283,17 @@ log(`  source ok — ${pre.type}, ${pre.mb}MB`);
 const entry = entryFor(post.file) ?? { file: post.file, date: post.date };
 const failures = [];
 
+/* Write the ledger the instant a platform succeeds, not at the end of the run.
+   A post is irreversible; the record of it is the only thing standing between a
+   retry and a duplicate. Anything that can kill the process between publishing
+   and recording — a crash, a runner timeout, a cancelled job — would otherwise
+   leave a live post nobody knows about, and the next run would post it again. */
+function saveLedger() {
+  if (DRY) return;
+  if (!entryFor(post.file) && Object.keys(entry).length > 2) ledger.posted.push(entry);
+  writeFileSync(LEDGER, JSON.stringify(ledger, null, 2) + "\n");
+}
+
 for (const platform of targets) {
   if (entry[platform]) { log(`  ${platform}: already posted, skipping`); continue; }
   log(`  ${platform}:`);
@@ -275,7 +301,7 @@ for (const platform of targets) {
     const id = platform === "instagram"
       ? await igPublish(accounts.igId, videoUrl, post.caption)
       : await fbPublish(accounts.page, videoUrl, post.caption);
-    if (!DRY) entry[platform] = { id, at: new Date().toISOString() };
+    if (!DRY) { entry[platform] = { id, at: new Date().toISOString() }; saveLedger(); }
   } catch (e) {
     /* Deliberately not fatal. One platform being broken should not stop the
        other, and the ledger keeps the failed half retryable tomorrow. */
@@ -289,8 +315,7 @@ if (DRY) {
   process.exit(failures.length ? 1 : 0);
 }
 
-if (!entryFor(post.file) && Object.keys(entry).length > 2) ledger.posted.push(entry);
-writeFileSync(LEDGER, JSON.stringify(ledger, null, 2) + "\n");
+saveLedger();
 
 const landed = targets.filter(t => entry[t]);
 log(`\n${failures.length ? "⚠" : "✓"} ${post.file} → ${landed.join(" + ") || "nowhere"}`);
