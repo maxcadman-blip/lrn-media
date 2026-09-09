@@ -48,9 +48,15 @@ jobs:
             *)       node publish.mjs ;;
           esac
 
-      # Records what went out. Skipped on check and dry-run, which write nothing.
+      # Records what went out — including on a FAILED run, which is the whole
+      # point. The publisher posts to whichever platform it can, writes the
+      # ledger, then exits non-zero to flag the half that failed. Gating this on
+      # success() meant a partial post was never recorded, so the next run read a
+      # stale ledger and posted again to the platform that had already worked.
+      # always() is correct here: the ledger is a record of what happened, and a
+      # run that half-worked is exactly when the record matters most.
       - name: Record what was posted
-        if: success() && (inputs.mode == '' || inputs.mode == 'publish')
+        if: always() && (inputs.mode == '' || inputs.mode == 'publish')
         run: |
           if [[ -n "$(git status --porcelain posted.json)" ]]; then
             git config user.name  "lrn.to publisher"
