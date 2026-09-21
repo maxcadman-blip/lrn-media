@@ -8,7 +8,9 @@
     "21 Sept: myth cards 23-forgetting-curve and 24-it-felt-easy removed — the",
     "statement-card format held 2.04s average watch against 5.25–5.30s for the games.",
     "Batch 4 moved forward to 22 Sept because those clips carry Max's voiceover;",
-    "the batch 3 clips are silent and alternate with them as the control."
+    "the batch 3 clips are silent and alternate with them as the control.",
+    "21 Sept, later: 22-sleep removed and the run pulled forward to start today, so",
+    "TikTok and Meta stay aligned. Voiced batch 4 alternates with voiced batch 3."
   ],
   "baseUrl": "https://maxcadman-blip.github.io/lrn-media/clips",
   "facebookPageId": "1233370956533582",
@@ -92,56 +94,51 @@
     },
     {
       "date": "2026-09-21",
-      "file": "22-sleep.mp4",
-      "caption": "The all-nighter trades the step that makes it stick for more of the step that doesn't.\n\n#studytips #revision #sleep #studytok #exams"
-    },
-    {
-      "date": "2026-09-22",
       "file": "25-rhyming-letters.mp4",
       "caption": "Five letters. Then five more — and the second five rhyme. Same count, same speed, and one of them falls apart. Comment which round you cleared.\n\n#memorytest #workingmemory #studytok #psychology #brainteaser"
     },
     {
-      "date": "2026-09-23",
+      "date": "2026-09-22",
       "file": "17-eight-in-chunks.mp4",
       "caption": "You just held ten digits. Comment if you got the second round - genuinely curious how many people clear it.\n\n#memorytest #hardmode #workingmemory #studytok #brainteaser"
     },
     {
-      "date": "2026-09-24",
+      "date": "2026-09-23",
       "file": "26-say-the-the-the.mp4",
       "caption": "Round two you have a job: say \"the, the, the\" out loud the whole way through. Out loud. I'll know if you didn't.\n\n#memorytest #hardmode #workingmemory #studytok #focus"
     },
     {
-      "date": "2026-09-25",
+      "date": "2026-09-24",
       "file": "18-the-middle-drops.mp4",
       "caption": "I'll tell you now which ones you'll lose. Comment if I was right 👀\n\n#memorytest #workingmemory #psychology #studytok #brainteaser"
     },
     {
-      "date": "2026-09-26",
+      "date": "2026-09-25",
       "file": "29-same-six-new-rhythm.mp4",
       "caption": "Same six digits, same seconds on screen. One pause is the only difference and it changes everything.\n\n#memorytest #workingmemory #studytok #brainteaser #psychology"
     },
     {
-      "date": "2026-09-27",
+      "date": "2026-09-26",
       "file": "19-dont-rehearse.mp4",
       "caption": "The hard part isn't remembering them. It's not repeating them. Nine seconds is longer than you think.\n\n#memorytest #hardmode #workingmemory #studytok #focus"
     },
     {
-      "date": "2026-09-28",
+      "date": "2026-09-27",
       "file": "30-count-backwards.mp4",
       "caption": "Four letters. Everyone gets four. Then count backwards from 100 in threes and watch them go.\n\n#memorytest #hardmode #workingmemory #studytok #focus"
     },
     {
-      "date": "2026-09-29",
+      "date": "2026-09-28",
       "file": "20-mixed-up.mp4",
       "caption": "Letters and numbers, alternating. Worse than either on its own, and there's a reason. Where did you drop it?\n\n#memorytest #hardmode #workingmemory #brainteaser #studytok"
     },
     {
-      "date": "2026-09-30",
+      "date": "2026-09-29",
       "file": "28-what-you-asked.mp4",
       "caption": "Nobody asked you to remember either set. You'll only be able to list one of them, and the reason is the question I asked.\n\n#studytips #memorytest #psychology #studytok #revision"
     },
     {
-      "date": "2026-10-01",
+      "date": "2026-09-30",
       "file": "27-one-in-red.mp4",
       "caption": "Seven words, seven seconds. I already know which one you'll get. Comment it and let's see if I'm right 👀\n\n#memorytest #psychology #studytok #brainteaser #learning"
     }
