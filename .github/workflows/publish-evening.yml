@@ -1,0 +1,80 @@
+name: Publish the evening clip to Instagram and Facebook
+
+# The second slot. 18:00 UTC — 19:00 UK during BST, 18:00 in winter — two hours
+# behind the 17:00 game clip in publish.yml.
+#
+# Why this exists as a separate workflow rather than a second entry in queue.json:
+# publish.mjs posts exactly one clip per run, on purpose. Two Reels landing minutes
+# apart reads as a bot to viewers and to the algorithm. Two runs two hours apart is
+# the shape we actually want, and it keeps the two strands independent — the TEDx
+# trial can be switched off without touching the run that is working.
+
+on:
+  schedule:
+    - cron: "0 18 * * *"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "What to do"
+        type: choice
+        default: check
+        options: [check, dry-run, publish]
+
+permissions:
+  contents: write # only so the run can commit posted.json back
+
+# Deliberately the SAME group as publish.yml. The two runs are two hours apart so
+# they should never meet, but if the 17:00 run ever overran, both would be pushing
+# posted.json at once and one push would be rejected. Sharing the group makes the
+# evening run wait instead.
+concurrency:
+  group: instagram-publish
+  cancel-in-progress: false # never interrupt a half-finished publish
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20" # for built-in fetch
+
+      # publish.mjs reads queue.json from its own directory and takes no argument
+      # for it. Rather than change a script that is working, the runner's copy of
+      # queue.json is swapped for the evening one. The checkout is thrown away when
+      # the job ends, and the commit step below stages posted.json by name, so this
+      # edit never reaches the repository.
+      #
+      # If anyone ever changes that step to `git add -A`, this breaks and the real
+      # queue.json gets clobbered. Don't.
+      - name: Use the evening queue
+        run: |
+          cp queue-evening.json queue.json
+          node -e "const q=require('./queue.json');console.log('evening queue:',q.posts.length,'posts,',q.posts.map(p=>p.file).join(', '))"
+
+      - name: Run publisher
+        env:
+          IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+        run: |
+          case "${{ inputs.mode || 'publish' }}" in
+            check)   node publish.mjs --check ;;
+            dry-run) node publish.mjs --dry-run ;;
+            *)       node publish.mjs ;;
+          esac
+
+      # Same reasoning as publish.yml: always(), because a run that half-worked is
+      # exactly when the record matters most. Staged by name so the swapped
+      # queue.json above is left behind.
+      - name: Record what was posted
+        if: always() && (inputs.mode == '' || inputs.mode == 'publish')
+        run: |
+          if [[ -n "$(git status --porcelain posted.json)" ]]; then
+            git config user.name "lrn.to publisher"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add posted.json
+            git commit -m "Posted $(node -p "require('./posted.json').posted.at(-1).file")"
+            git push
+          fi
