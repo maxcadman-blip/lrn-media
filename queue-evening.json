@@ -1,0 +1,46 @@
+{
+  "_comment": [
+    "The 19:00 evening queue — the TEDx strand, separate from the 17:00 game clips.",
+    "Read by .github/workflows/publish-evening.yml, which copies this over queue.json",
+    "inside the runner before calling publish.mjs. The copy is never committed; only",
+    "posted.json is. publish.mjs itself is untouched and the 17:00 run is unaffected.",
+    "",
+    "Both runs share posted.json, which is what stops a clip going out twice.",
+    "",
+    "LENGTH MATTERS HERE. Meta's publishing API caps Reels at 90 seconds: Facebook",
+    "rejects anything longer outright, and Instagram accepts it but publishes it as an",
+    "ordinary video rather than a Reel, which costs most of the reach. The TEDx cuts",
+    "running on TikTok include a 1:32 and a 1:37 and would fail on both counts. These",
+    "three are the shorter cuts — 32s, 38s, 40s — and are safely inside the limit.",
+    "",
+    "22 Sept: started with the vote clip deliberately. It is the same material that",
+    "took 8 views on TikTok against 703 for that day's game clip, despite holding a",
+    "9.57s average watch — the highest the account has recorded. Running it on Meta is",
+    "the cleanest way to tell whether that was TikTok suppressing third-party footage",
+    "or something about the clip itself."
+  ],
+
+  "baseUrl": "https://maxcadman-blip.github.io/lrn-media/clips",
+  "facebookPageId": "1233370956533582",
+
+  "posts": [
+    {
+      "_note": "Authority piece — no link, by design. A clip that is obviously a point converts better than one that is obviously an advert.",
+      "date": "2026-09-22",
+      "file": "tedx-06-the-vote.mp4",
+      "caption": "Dr Chris Meah opens his TEDx talk by asking the audience to vote on what he should talk about. It does not go how they expect.\n\n#tedx #ai #publicspeaking #artificialintelligence #learning"
+    },
+    {
+      "_note": "Funnel piece — carries the link. The founder's own AI expert explaining why an AI that merely sounds right isn't good enough is the closest thing in the talk to a product argument that doesn't feel like one.",
+      "date": "2026-09-23",
+      "file": "tedx-01-plausible.mp4",
+      "caption": "It doesn't think. It doesn't know. It predicts.\n\n\"Plausible is not true.\" Which is why our quiz is built on cited research rather than on whatever sounds right → lrn.to\n\n#ai #criticalthinking #tedx #psychology #learning"
+    },
+    {
+      "_note": "Authority piece — no link. Reach and credibility play; let it be a point.",
+      "date": "2026-09-24",
+      "file": "tedx-05-paperclips.mp4",
+      "caption": "Ask a machine to make as many paperclips as possible. It can't make paperclips if it's switched off. So it stops you switching it off.\n\nThe alignment problem in forty seconds, from Dr Chris Meah at TEDxAstonUniversity.\n\n#ai #aisafety #tedx #technology #futurism"
+    }
+  ]
+}
