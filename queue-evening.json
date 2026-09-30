@@ -17,7 +17,8 @@
     "took 8 views on TikTok against 703 for that day's game clip, despite holding a",
     "9.57s average watch — the highest the account has recorded. Running it on Meta is",
     "the cleanest way to tell whether that was TikTok suppressing third-party footage",
-    "or something about the clip itself."
+    "or something about the clip itself.",
+    "30 Sept: optional per-post \"firstComment\" — publish.mjs posts it as the account's first comment right after publishing (Max, 30 Sept). FYN 1-4 replaced in place by cold-open cuts; stories 15/13/9 by first-second hook cuts."
   ],
   "baseUrl": "https://maxcadman-blip.github.io/lrn-media/clips",
   "facebookPageId": "1233370956533582",
@@ -43,17 +44,20 @@
     {
       "date": "2026-10-02",
       "file": "2026-10-02-story15-ten-thousand-hours.mp4",
-      "caption": "10,000 hours. How much of the gap between people does practice actually explain? Have a number before you look — 12%, across 88 studies (Macnamara, Hambrick & Oswald, 2014, Psychological Science). Comment your number. I'll know if you peeked. Find out how you learn → link in bio.\n\n#10000hours #practice #learning #psychology #studytok #brainteaser"
+      "caption": "10,000 hours. How much of the gap between people does practice actually explain? Have a number before you look — 12%, across 88 studies (Macnamara, Hambrick & Oswald, 2014, Psychological Science). Comment your number. I'll know if you peeked. Find out how you learn → link in bio.\n\n#10000hours #practice #learning #psychology #studytok #brainteaser",
+      "firstComment": "Lock in your guess before the reveal: what share of the gap does practice explain? 👇"
     },
     {
       "date": "2026-10-03",
       "file": "2026-10-03-story13-spacing.mp4",
-      "caption": "You learn it today and want it still there in a year. One review: A, tomorrow — or B, in three weeks? It's B, by a distance (Cepeda, Vul, Rohrer, Wixted & Pashler, 2008, Psychological Science — 1,354 people). Comment A or B. I already know what you picked. Find out how you learn → link in bio.\n\n#spacing #revision #studytok #learning #psychology #memory"
+      "caption": "You learn it today and want it still there in a year. One review: A, tomorrow — or B, in three weeks? It's B, by a distance (Cepeda, Vul, Rohrer, Wixted & Pashler, 2008, Psychological Science — 1,354 people). Comment A or B. I already know what you picked. Find out how you learn → link in bio.\n\n#spacing #revision #studytok #learning #psychology #memory",
+      "firstComment": "A or B? Lock it in before the answer 👇"
     },
     {
       "date": "2026-10-04",
       "file": "2026-10-04-story09-gorilla.mp4",
-      "caption": "Find the nodules on the scan. 20 of 24 radiologists missed the gorilla sitting in the corner of it — and most of them looked straight at it (Drew, Võ & Wolfe, 2013, Psychological Science). Comment your count. I already know what you missed. Find out how you learn → link in bio.\n\n#attention #inattentionalblindness #psychology #brainteaser #learning #studytok"
+      "caption": "Find the nodules on the scan. 20 of 24 radiologists missed the gorilla sitting in the corner of it — and most of them looked straight at it (Drew, Võ & Wolfe, 2013, Psychological Science). Comment your count. I already know what you missed. Find out how you learn → link in bio.\n\n#attention #inattentionalblindness #psychology #brainteaser #learning #studytok",
+      "firstComment": "How many nodules did you count? Number only 👇"
     }
   ]
 }

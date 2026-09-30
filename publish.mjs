@@ -227,6 +227,24 @@ async function fbPublish(page, videoUrl, description) {
   return video_id;
 }
 
+/* ------------------------------------------------------------ first comment */
+
+/* Optional first comment, posted by the account straight after a publish. Text
+   comes from the queue entry's "firstComment" (or queue.defaultFirstComment).
+   Never fatal and never retried: a publish that landed stays landed, and the
+   ledger records either the comment id or why it failed, so a rerun can't post
+   a second one. Needs instagram_business_manage_comments on IG_TOKEN and
+   pages_manage_engagement on the Page token — without them the call fails with
+   a permission error, which is logged and otherwise ignored. */
+async function firstComment(platform, mediaId, text) {
+  if (!text || !mediaId || DRY) return null;
+  await sleep(platform === "instagram" ? 5_000 : 15_000);
+  const res = platform === "instagram"
+    ? await call(IG_API, `/${mediaId}/comments`, { method: "POST", token: IG_TOKEN, params: { message: text } })
+    : await call(FB_API, `/${mediaId}/comments`, { method: "POST", token: accounts.page.token, params: { message: text } });
+  return res.id;
+}
+
 /* --------------------------------------------------------------------- run */
 
 if (!IG_TOKEN && !FB_TOKEN)
@@ -313,6 +331,17 @@ for (const platform of targets) {
       ? await igPublish(accounts.igId, videoUrl, post.caption)
       : await fbPublish(accounts.page, videoUrl, post.caption);
     if (!DRY) { entry[platform] = { id, at: new Date().toISOString() }; saveLedger(); }
+    const text = post.firstComment ?? queue.defaultFirstComment;
+    if (!DRY && text && !entry[platform].comment) {
+      try {
+        const cid = await firstComment(platform, id, text);
+        entry[platform].comment = cid; log(`    first comment ${cid}`);
+      } catch (e) {
+        entry[platform].comment = "failed: " + e.message.split("\n").slice(0, 2).join(" ").slice(0, 200);
+        log(`    ⚠ first comment not posted — ${e.message.split("\n").slice(1, 3).join(" ").trim() || e.message.split("\n")[0]}`);
+      }
+      saveLedger();
+    }
   } catch (e) {
     /* Deliberately not fatal. One platform being broken should not stop the
        other, and the ledger keeps the failed half retryable tomorrow. */

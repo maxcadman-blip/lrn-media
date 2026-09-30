@@ -10,7 +10,8 @@
     "Batch 4 moved forward to 22 Sept because those clips carry Max's voiceover;",
     "the batch 3 clips are silent and alternate with them as the control.",
     "21 Sept, later: 22-sleep removed and the run pulled forward to start today, so",
-    "TikTok and Meta stay aligned. Voiced batch 4 alternates with voiced batch 3."
+    "TikTok and Meta stay aligned. Voiced batch 4 alternates with voiced batch 3.",
+    "30 Sept: optional per-post \"firstComment\" — publish.mjs posts it as the account's first comment right after publishing (Max, 30 Sept). FYN 1-4 replaced in place by cold-open cuts; stories 15/13/9 by first-second hook cuts."
   ],
   "baseUrl": "https://maxcadman-blip.github.io/lrn-media/clips",
   "facebookPageId": "1233370956533582",
@@ -140,27 +141,32 @@
     {
       "date": "2026-09-30",
       "file": "27-one-in-red.mp4",
-      "caption": "Seven words, seven seconds. I already know which one you'll get. Comment it and let's see if I'm right 👀\n\n#memorytest #psychology #studytok #brainteaser #learning"
+      "caption": "Seven words, seven seconds. I already know which one you'll get. Comment it and let's see if I'm right 👀\n\n#memorytest #psychology #studytok #brainteaser #learning",
+      "firstComment": "Which word did you get? One word only 👇"
     },
     {
       "date": "2026-10-01",
       "file": "find-your-number-01.mp4",
-      "caption": "Four, five or six? Comment your number — I'll know if you peeked. Your number is the longest round you recalled in the right order, not a label for your ability. Find out how you learn → link in bio.\n\n#memorychallenge #learning #brainteaser #studytok #memory"
+      "caption": "Four, five or six? Comment your number — I'll know if you peeked. Your number is the longest round you recalled in the right order, not a label for your ability. Find out how you learn → link in bio.\n\n#memorychallenge #learning #brainteaser #studytok #memory",
+      "firstComment": "Which round did you reach — 4, 5 or 6? Number only 👇"
     },
     {
       "date": "2026-10-02",
       "file": "find-your-number-02.mp4",
-      "caption": "Four, five or six? Comment your number — I'll know if you peeked. Your number is the longest round you recalled in the right order, not a label for your ability. Find out how you learn → link in bio.\n\n#memorychallenge #learning #brainteaser #studytok #memory"
+      "caption": "Four, five or six? Comment your number — I'll know if you peeked. Your number is the longest round you recalled in the right order, not a label for your ability. Find out how you learn → link in bio.\n\n#memorychallenge #learning #brainteaser #studytok #memory",
+      "firstComment": "Which round did you reach — 4, 5 or 6? Number only 👇"
     },
     {
       "date": "2026-10-03",
       "file": "find-your-number-03.mp4",
-      "caption": "Four, five or six? Comment your number — I'll know if you peeked. Your number is the longest round you recalled in the right order, not a label for your ability. Find out how you learn → link in bio.\n\n#memorychallenge #learning #brainteaser #studytok #memory"
+      "caption": "Four, five or six? Comment your number — I'll know if you peeked. Your number is the longest round you recalled in the right order, not a label for your ability. Find out how you learn → link in bio.\n\n#memorychallenge #learning #brainteaser #studytok #memory",
+      "firstComment": "Which round did you reach — 4, 5 or 6? Number only 👇"
     },
     {
       "date": "2026-10-04",
       "file": "find-your-number-04.mp4",
-      "caption": "Four, five or six? Comment your number — I'll know if you peeked. Your number is the longest round you recalled in the right order, not a label for your ability. Find out how you learn → link in bio.\n\n#memorychallenge #learning #brainteaser #studytok #memory"
+      "caption": "Four, five or six? Comment your number — I'll know if you peeked. Your number is the longest round you recalled in the right order, not a label for your ability. Find out how you learn → link in bio.\n\n#memorychallenge #learning #brainteaser #studytok #memory",
+      "firstComment": "Which round did you reach — 4, 5 or 6? Number only 👇"
     }
   ]
 }
