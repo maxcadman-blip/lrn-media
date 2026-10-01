@@ -37,6 +37,7 @@ const IG_TOKEN = process.env.IG_TOKEN || "";
 const FB_TOKEN = process.env.FB_PAGE_TOKEN || "";
 const DRY = process.argv.includes("--dry-run");
 const CHECK = process.argv.includes("--check");
+const RETRY_COMMENTS = process.argv.includes("--retry-comments");
 
 const QUEUE = join(HERE, "queue.json");
 const LEDGER = join(HERE, "posted.json");
@@ -301,6 +302,41 @@ if (CHECK) {
   }
   log(bad ? `\n✗ ${bad} URL(s) would fail.` : `\n✓ Tokens, accounts and all videos are good.`);
   process.exit(bad ? 1 : 0);
+}
+
+if (RETRY_COMMENTS) {
+  /* Re-post first comments that the API refused, and publish nothing. A refused
+     comment was never created, so retrying can't make a second one. Added 1 Oct:
+     the first Facebook comment failed on a token without pages_manage_engagement,
+     and this puts it back once the token is fixed. Last 7 days only; the comment
+     text comes from whichever queue the post came from. */
+  const evening = readJson(join(HERE, "queue-evening.json"), { posts: [] });
+  const cutoff = new Date(Date.now() - 7 * 864e5).toISOString().slice(0, 10);
+  let tried = 0, fixed = 0;
+  for (const e of ledger.posted) {
+    if (!e.date || e.date < cutoff) continue;
+    const q = queue.posts.find(p => p.file === e.file) ?? evening.posts.find(p => p.file === e.file);
+    const text = q?.firstComment ?? queue.defaultFirstComment;
+    if (!text) continue;
+    for (const platform of targets) {
+      const rec = e[platform];
+      if (!rec?.id || !String(rec.comment ?? "").startsWith("failed")) continue;
+      tried++;
+      try {
+        const cid = await firstComment(platform, rec.id, text);
+        rec.comment = cid; fixed++;
+        log(`  ✓ ${e.file} on ${platform}: first comment ${cid}`);
+      } catch (err) {
+        rec.comment = "failed: " + err.message.split("\n").slice(0, 2).join(" ").slice(0, 200);
+        log(`  ✗ ${e.file} on ${platform}: ${err.message.split("\n").slice(0, 2).join(" ")}`);
+      }
+      writeFileSync(LEDGER, JSON.stringify(ledger, null, 2) + "\n");
+    }
+  }
+  const summary = tried ? `${fixed} of ${tried} refused first comment(s) now posted` : "no refused first comments in the last 7 days";
+  log(`\n${summary}.`);
+  if (process.env.GITHUB_ACTIONS) console.log(`::notice title=First comments::${summary}`);
+  process.exit(tried && fixed < tried ? 1 : 0);
 }
 
 /* A dry run ignores the schedule. The point of a rehearsal is to prove the round
