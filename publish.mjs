@@ -273,6 +273,25 @@ if (accounts.facebook)  log(`  Facebook   ${accounts.facebook}`);
 if (targets.length === 1) log(`  (the other platform's token isn't set — skipping it)`);
 
 if (CHECK) {
+  /* What the Facebook token can actually do. Names only, never the token. Added
+     1 Oct after the first Facebook comment came back "(#200) Permissions error":
+     comments need pages_manage_engagement on the token and the MODERATE task on
+     the Page. On Actions the result is also raised as an annotation, so it shows
+     on the run page without opening the log. */
+  if (FB_TOKEN) {
+    const note = msg => { log(`  ${msg}`); if (process.env.GITHUB_ACTIONS) console.log(`::notice title=Facebook token::${msg}`); };
+    const perms = await call(FB_API, "/me/permissions", { token: FB_TOKEN }).catch(e => ({ error: e.message.split("\n").slice(0, 2).join(" ") }));
+    if (perms.data) {
+      const granted = perms.data.filter(p => p.status === "granted").map(p => p.permission).sort();
+      note(`permissions: ${granted.join(", ") || "(none listed)"}`);
+      const missing = ["pages_manage_engagement", "pages_read_user_content"].filter(n => !granted.includes(n));
+      note(missing.length ? `MISSING for comments: ${missing.join(", ")}` : "comment permissions present");
+    } else note(`couldn't list permissions: ${perms.error}`);
+    const pg = await call(FB_API, "/me/accounts", { params: { fields: "id,tasks" }, token: FB_TOKEN }).catch(() => ({ data: [] }));
+    const mine = (pg.data ?? []).find(p => p.id === accounts.page?.id);
+    note(mine?.tasks ? `Page tasks: ${mine.tasks.join(", ")}${mine.tasks.includes("MODERATE") ? "" : " (no MODERATE, so comments will fail)"}` : "Page tasks: not listed");
+  }
+
   log(`\nChecking ${queue.posts.length} video URLs:`);
   let bad = 0;
   for (const p of queue.posts) {
