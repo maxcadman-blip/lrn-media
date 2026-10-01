@@ -16,7 +16,7 @@ on:
         description: "What to do"
         type: choice
         default: check
-        options: [check, dry-run, publish]
+        options: [check, dry-run, publish, comments]
 
 permissions:
   contents: write        # only so the run can commit posted.json back
@@ -45,6 +45,7 @@ jobs:
           case "${{ inputs.mode || 'publish' }}" in
             check)   node publish.mjs --check ;;
             dry-run) node publish.mjs --dry-run ;;
+            comments) node publish.mjs --retry-comments ;;
             *)       node publish.mjs ;;
           esac
 
@@ -56,12 +57,16 @@ jobs:
       # always() is correct here: the ledger is a record of what happened, and a
       # run that half-worked is exactly when the record matters most.
       - name: Record what was posted
-        if: always() && (inputs.mode == '' || inputs.mode == 'publish')
+        if: always() && (inputs.mode == '' || inputs.mode == 'publish' || inputs.mode == 'comments')
         run: |
           if [[ -n "$(git status --porcelain posted.json)" ]]; then
             git config user.name  "lrn.to publisher"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add posted.json
-            git commit -m "Posted $(node -p "require('./posted.json').posted.at(-1).file")"
+            if [[ "${{ inputs.mode }}" == "comments" ]]; then
+              git commit -m "Retried first comments"
+            else
+              git commit -m "Posted $(node -p "require('./posted.json').posted.at(-1).file")"
+            fi
             git push
           fi
