@@ -11,7 +11,8 @@
     "the batch 3 clips are silent and alternate with them as the control.",
     "21 Sept, later: 22-sleep removed and the run pulled forward to start today, so",
     "TikTok and Meta stay aligned. Voiced batch 4 alternates with voiced batch 3.",
-    "30 Sept: optional per-post \"firstComment\" — publish.mjs posts it as the account's first comment right after publishing (Max, 30 Sept). FYN 1-4 replaced in place by cold-open cuts; stories 15/13/9 by first-second hook cuts."
+    "30 Sept: optional per-post \"firstComment\" — publish.mjs posts it as the account's first comment right after publishing (Max, 30 Sept). FYN 1-4 replaced in place by cold-open cuts; stories 15/13/9 by first-second hook cuts.",
+    "6 Oct (staged by Claude, NOT committed — Max commits): Wed 7–Sun 11 Oct game reposts 27, 18, 28, 05, 16 as -oct copies. Captions per fact-check-english-next-2026-10-05.md: 28 and 16 use the fixed captions; 27, 18, 05 CLEAR as before."
   ],
   "baseUrl": "https://maxcadman-blip.github.io/lrn-media/clips",
   "facebookPageId": "1233370956533582",
@@ -179,6 +180,36 @@
       "file": "26-say-the-the-the-oct.mp4",
       "caption": "Round two you have a job: say \"the, the, the\" out loud the whole way through. Out loud. I'll know if you didn't.\n\n#memorytest #hardmode #workingmemory #studytok #focus",
       "firstComment": "Did you keep saying \"the\" the whole way through? Be honest 👇"
+    },
+    {
+      "date": "2026-10-07",
+      "file": "27-one-in-red-oct.mp4",
+      "caption": "Seven words, seven seconds. I already know which one you'll get. Comment it and let's see if I'm right 👀\n\n#memorytest #psychology #studytok #brainteaser #learning",
+      "firstComment": "Which word did you get? One word only 👇"
+    },
+    {
+      "date": "2026-10-08",
+      "file": "18-the-middle-drops-oct.mp4",
+      "caption": "I'll tell you now which ones you'll lose. Comment if I was right 👀\n\n#memorytest #workingmemory #psychology #studytok #brainteaser",
+      "firstComment": "Which ones did you lose: the start, the middle or the end? 👇"
+    },
+    {
+      "date": "2026-10-09",
+      "file": "28-what-you-asked-oct.mp4",
+      "caption": "Nobody asked you to remember either set. You'll list far more of one of them, and the reason is the question I asked.\n\n#studytips #memorytest #psychology #studytok #revision",
+      "firstComment": "How many could you list from each set? Like 5/1 👇"
+    },
+    {
+      "date": "2026-10-10",
+      "file": "05-warmup-four-oct.mp4",
+      "caption": "Starts easy. Doesn't stay easy. Comment where you dropped it 🧠\n\n#memorytest #workingmemory #studytok #brainteaser #psychology",
+      "firstComment": "Where did you drop it: four or five? 👇"
+    },
+    {
+      "date": "2026-10-11",
+      "file": "16-chunking-oct.mp4",
+      "caption": "Same six digits both times. The second time they're grouped, and suddenly it's easier. Grouping is a big part of why phone numbers stick.\n\n#memorytest #workingmemory #studytok #learning #brainteaser",
+      "firstComment": "Which round was easier, one or two? 👇"
     }
   ]
 }

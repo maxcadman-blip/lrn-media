@@ -18,7 +18,8 @@
     "9.57s average watch — the highest the account has recorded. Running it on Meta is",
     "the cleanest way to tell whether that was TikTok suppressing third-party footage",
     "or something about the clip itself.",
-    "30 Sept: optional per-post \"firstComment\" — publish.mjs posts it as the account's first comment right after publishing (Max, 30 Sept). FYN 1-4 replaced in place by cold-open cuts; stories 15/13/9 by first-second hook cuts."
+    "30 Sept: optional per-post \"firstComment\" — publish.mjs posts it as the account's first comment right after publishing (Max, 30 Sept). FYN 1-4 replaced in place by cold-open cuts; stories 15/13/9 by first-second hook cuts.",
+    "6 Oct (staged by Claude, NOT committed — Max commits): Wed 7–Sat 10 Oct 19:00 facts = door swap (caption fixed per fact-check-live-clips-2026-10-02: 'only 7 of 15 spotted the swap'), 14, 1, 10 — first time on Instagram via the repo (Sept noon runs were Facebook-only bulk posts). Sun 11 left empty for Max: story 15 already ran here on 2 Oct."
   ],
   "baseUrl": "https://maxcadman-blip.github.io/lrn-media/clips",
   "facebookPageId": "1233370956533582",
@@ -58,6 +59,30 @@
       "file": "2026-10-04-story09-gorilla.mp4",
       "caption": "Find the nodules on the scan. 20 of 24 radiologists missed the gorilla sitting in the corner of it — and most of them looked straight at it (Drew, Võ & Wolfe, 2013, Psychological Science). Comment your count. I already know what you missed. Find out how you learn → link in bio.\n\n#attention #inattentionalblindness #psychology #brainteaser #learning #studytok",
       "firstComment": "How many nodules did you count? Number only 👇"
+    },
+    {
+      "date": "2026-10-07",
+      "file": "2026-10-07-story08-door-swap.mp4",
+      "caption": "They swapped the person you were talking to while a door went past. About half never noticed — only 7 of 15 spotted the swap, in the street, for real (Simons & Levin, 1998). Comment what you got. Find out how you learn → link in bio. #changeblindness #attention #psychology #brainteaser #learning #studytok",
+      "firstComment": "Did you spot the swap first time? Yes or no 👇"
+    },
+    {
+      "date": "2026-10-08",
+      "file": "2026-10-08-story14-seventeen-hours.mp4",
+      "caption": "How long awake before you're as impaired as a driver at the Scottish drink-drive limit? Have a number before you look — 17 hours (Dawson & Reid, 1997, Nature). Comment your number. I'll know if you peeked. Find out how you learn → link in bio. #sleep #revision #studytok #psychology #brainteaser #learning",
+      "firstComment": "What was your guess before you saw it? 👇"
+    },
+    {
+      "date": "2026-10-09",
+      "file": "2026-10-09-story01-missing-word.mp4",
+      "caption": "Was SLEEP on the list? I already know what you said. It was never there — more than 8 in 10 say yes anyway (Roediger & McDermott, 1995). Comment yes or no and let's see if I'm right. Find out how you learn → link in bio. #memory #falsememory #psychology #brainteaser #learning #studytok",
+      "firstComment": "Was SLEEP on the list? Yes or no 👇"
+    },
+    {
+      "date": "2026-10-10",
+      "file": "2026-10-10-story10-reread-or-test.mp4",
+      "caption": "A: read it in four sessions. B: read it once, then test yourself three times. One week later — A 40%, B 61% (Roediger & Karpicke, 2006). Most pick A. Comment A or B and I'll reply. Find out how you learn → link in bio. #studytok #revision #learning #psychology #memory #brainteaser",
+      "firstComment": "A or B? 👇"
     }
   ]
 }
