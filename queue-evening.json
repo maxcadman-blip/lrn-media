@@ -19,7 +19,8 @@
     "the cleanest way to tell whether that was TikTok suppressing third-party footage",
     "or something about the clip itself.",
     "30 Sept: optional per-post \"firstComment\" — publish.mjs posts it as the account's first comment right after publishing (Max, 30 Sept). FYN 1-4 replaced in place by cold-open cuts; stories 15/13/9 by first-second hook cuts.",
-    "6 Oct (staged by Claude, NOT committed — Max commits): Wed 7–Sat 10 Oct 19:00 facts = door swap (caption fixed per fact-check-live-clips-2026-10-02: 'only 7 of 15 spotted the swap'), 14, 1, 10 — first time on Instagram via the repo (Sept noon runs were Facebook-only bulk posts). Sun 11 left empty for Max: story 15 already ran here on 2 Oct."
+    "6 Oct (staged by Claude, NOT committed — Max commits): Wed 7–Sat 10 Oct 19:00 facts = door swap (caption fixed per fact-check-live-clips-2026-10-02: 'only 7 of 15 spotted the swap'), 14, 1, 10 — first time on Instagram via the repo (Sept noon runs were Facebook-only bulk posts). Sun 11 left empty for Max: story 15 already ran here on 2 Oct.",
+    "6 Oct (Max signed off 'prefer the mozart one'): Sun 11 Oct 19:00 = NEW story 11 Mozart-or-King (fact-check CLEAR after fixes, queue-noon/new-facts-2026-10-11/). Reserve: story 12 brain training (not queued)."
   ],
   "baseUrl": "https://maxcadman-blip.github.io/lrn-media/clips",
   "facebookPageId": "1233370956533582",
@@ -83,6 +84,12 @@
       "file": "2026-10-10-story10-reread-or-test.mp4",
       "caption": "A: read it in four sessions. B: read it once, then test yourself three times. One week later — A 40%, B 61% (Roediger & Karpicke, 2006). Most pick A. Comment A or B and I'll reply. Find out how you learn → link in bio. #studytok #revision #learning #psychology #memory #brainteaser",
       "firstComment": "A or B? 👇"
+    },
+    {
+      "date": "2026-10-11",
+      "file": "2026-10-11-story11-mozart-or-king.mp4",
+      "caption": "Right before a puzzle test: A, Mozart — or B, a Stephen King story? Which gets you the higher score? Both, equally. Against a story instead of silence, the Mozart advantage disappeared — people mostly did better after whichever one they preferred (Nantais & Schellenberg, 1999, Psychological Science). Comment A or B. No changing it now. Find out how you learn → link in bio.\n\n#mozarteffect #studytok #learning #psychology #focus #brainteaser",
+      "firstComment": "A or B? Lock it in before the answer 👇"
     }
   ]
 }
