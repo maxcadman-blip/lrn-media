@@ -342,8 +342,15 @@ if (RETRY_COMMENTS) {
 /* A dry run ignores the schedule. The point of a rehearsal is to prove the round
    trip now — waiting until something is due would mean the first real exercise
    of the publish path is the one that goes out live. */
+/* NOT_BEFORE_UTC ("HH:MM"), set by each workflow, holds today's clip until its
+   slot. GitHub starts scheduled runs late (by hours at busy times), so the
+   workflows now run every 15 minutes across a window and this gate decides when
+   the clip actually goes. Earlier, overdue dates are not held. */
+const NOT_BEFORE = process.env.NOT_BEFORE_UTC || "";
+const tooEarly = p => NOT_BEFORE && p.date === today() && new Date().toISOString().slice(11, 16) < NOT_BEFORE;
+
 const due = queue.posts
-  .filter(p => !isDone(p.file) && (DRY || p.date <= today()))
+  .filter(p => !isDone(p.file) && (DRY || (p.date <= today() && !tooEarly(p))))
   .sort((a, b) => a.date.localeCompare(b.date));
 
 if (!due.length) {
