@@ -1,7 +1,9 @@
 name: Publish the evening clip to Instagram and Facebook
 
 # The second slot. 18:00 UTC — 19:00 UK during BST, 18:00 in winter — two hours
-# behind the 17:00 game clip in publish.yml.
+# behind the 17:00 game clip in publish.yml. Runs every 15 minutes from 17:05 to
+# 22:50 UTC; NOT_BEFORE_UTC holds the clip until 18:00 (GitHub starts single
+# scheduled runs hours late).
 #
 # Why this exists as a separate workflow rather than a second entry in queue.json:
 # publish.mjs posts exactly one clip per run, on purpose. Two Reels landing minutes
@@ -11,7 +13,7 @@ name: Publish the evening clip to Instagram and Facebook
 
 on:
   schedule:
-    - cron: "0 18 * * *"
+    - cron: "5,20,35,50 17-22 * * *"
   workflow_dispatch:
     inputs:
       mode:
@@ -56,6 +58,7 @@ jobs:
 
       - name: Run publisher
         env:
+          NOT_BEFORE_UTC: "18:00"
           IG_TOKEN: ${{ secrets.IG_TOKEN }}
           FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
         run: |

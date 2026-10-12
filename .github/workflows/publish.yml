@@ -1,6 +1,8 @@
 name: Publish to Instagram and Facebook
 
-# Runs every day at 16:00 UTC — 17:00 UK during BST, 16:00 in winter.
+# Due at 16:00 UTC — 17:00 UK during BST, 16:00 in winter. GitHub started the
+# single 16:00 run up to 4 hours late (Oct 2026), so it now runs every 15 minutes
+# from 15:05 to 20:50 UTC and NOT_BEFORE_UTC holds the clip until 16:00.
 # The script publishes only what queue.json says is due, so a run on a day with
 # nothing scheduled costs a few seconds and does nothing.
 #
@@ -9,7 +11,7 @@ name: Publish to Instagram and Facebook
 
 on:
   schedule:
-    - cron: "0 16 * * *"
+    - cron: "5,20,35,50 15-20 * * *"
   workflow_dispatch:
     inputs:
       mode:
@@ -37,6 +39,7 @@ jobs:
 
       - name: Run publisher
         env:
+          NOT_BEFORE_UTC: "16:00"
           IG_TOKEN: ${{ secrets.IG_TOKEN }}
           # Absent until the Page token is created — the script posts to
           # whichever platforms have a token, so Instagram keeps working.
